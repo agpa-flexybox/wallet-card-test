@@ -579,7 +579,7 @@
         </div>
 
         <div class="button-group">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
         </div>
       </section>
     </form>
@@ -663,14 +663,23 @@
       input.addEventListener('change', renderCards);
     });
 
+    let isSubmitting = false;
+
     document.getElementById('testForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      if (isSubmitting) return;
+
+      const submitBtn = document.getElementById('submitBtn');
       const selectedCombo = document.querySelector('input[name="preferred_combination"]:checked')?.value;
       if (!selectedCombo) {
         document.querySelector('input[name="preferred_combination"]').reportValidity();
         return;
       }
+
+      isSubmitting = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
 
       const now = new Date();
       const payload = {
@@ -704,6 +713,9 @@
       } catch (error) {
         console.error(error);
         alert('Error submitting. Please try again.');
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
       }
     });
 

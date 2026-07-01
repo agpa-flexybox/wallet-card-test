@@ -405,9 +405,27 @@
       background: rgba(0,0,0,0.18);
       color: var(--white);
       font-family: 'Nunito Sans', Arial, sans-serif;
-      margin-top: 16px;
       resize: vertical;
       min-height: 70px;
+    }
+
+    .feedback-section {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--panel-border);
+    }
+
+    .feedback-label {
+      display: block;
+      margin: 0 0 10px;
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .comment-box::placeholder {
+      color: rgba(255,255,255,0.48);
     }
 
     .success {
@@ -610,6 +628,11 @@
           </div>
         </div>
 
+        <div class="feedback-section">
+          <label class="feedback-label" for="designComment">Do you have any feedback on the card design? Feel free to share it here.</label>
+          <textarea class="comment-box" id="designComment" name="design_comment" placeholder="Write your comment here..."></textarea>
+        </div>
+
         <div class="button-group">
           <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
         </div>
@@ -730,6 +753,7 @@
       const payload = {
         preferred_combination: selectedCombo,
         combination_label: variantLabels[selectedCombo],
+        design_comment: document.getElementById('designComment').value.trim(),
         timestamp: now.toLocaleString('da-DK', {
           timeZone: 'Europe/Copenhagen',
           year: 'numeric',
